@@ -12,9 +12,7 @@ public class Game {
 
   private Hand dealerHand = new Hand();
   private Hand playerHand = new Hand();
-  private int playerBalance = 0;
-  private int playerBet = 0;
-
+  private Player player = new Player();
   public static void main(String[] args) {
     displayWelcomeScreen();
     playGame();
@@ -33,15 +31,22 @@ public class Game {
 
   private static void playGame() {
     Game game = new Game();
+    getUserInputToPlayGame(game);
+  }
 
-    String input;
+  private static void getUserInputToPlayGame(Game game) {
     do {
       game.initialDeal();
       game.play();
-      System.out.println("Play again? (y/n):");
-      Scanner scanner = new Scanner(System.in);
-      input = scanner.nextLine();
-    } while (input.equalsIgnoreCase("y"));
+    } while (doesUserWantsToPlay());
+  }
+
+  private static boolean doesUserWantsToPlay() {
+    String input;
+    System.out.println("Play again? (y/n):");
+    Scanner scanner = new Scanner(System.in);
+    input = scanner.nextLine();
+    return input.equalsIgnoreCase("y");
   }
 
   private static void resetScreen() {
@@ -82,10 +87,10 @@ public class Game {
     while (!playerBusted) {
       displayGameState();
       String playerChoice = inputFromPlayer().toLowerCase();
-      if (playerChoice.startsWith("s")) {
+      if (isPlayerStanding(playerChoice)) {
         break;
       }
-      if (playerChoice.startsWith("h")) {
+      if (isPlayerHitting(playerChoice)) {
         drawCardIntoPlayerHand();
         playerBusted = playerHand.isBusted();
       } else {
@@ -103,10 +108,22 @@ public class Game {
     handleGameOutcome();
   }
 
+  private boolean isPlayerHitting(String playerChoice) {
+    return playerChoice.startsWith("h");
+  }
+
+  private boolean isPlayerStanding(String playerChoice) {
+    return playerChoice.startsWith("s");
+  }
+
   private void dealerPlays() {
-    while (dealerHand.value() <= 16) {
+    while (isHandValueLEto16()) {
       drawCardIntoDealerHand();
     }
+  }
+
+  private boolean isHandValueLEto16() {
+    return dealerHand.value() <= 16;
   }
 
   private void handleGameOutcome() {
@@ -184,27 +201,27 @@ public class Game {
   }
 
   public void playerDeposits(int amount) {
-    playerBalance += amount;
+    player.balance += amount;
   }
 
   public void playerBets(int betAmount) {
-    playerBet = betAmount;
-    playerBalance -= betAmount;
+    player.bet = betAmount;
+    player.balance -= betAmount;
   }
 
   public int playerBalance() {
-    return playerBalance;
+    return player.balance;
   }
 
   public void playerWins() {
-    playerBalance += playerBet * 2;
+    player.balance += player.bet * 2;
   }
 
   public void playerLoses() {
-    playerBalance += playerBet * 0;
+    player.balance += player.bet * 0;
   }
 
   public void playerTies() {
-    playerBalance += playerBet * 1;
+    player.balance += player.bet * 1;
   }
 }
