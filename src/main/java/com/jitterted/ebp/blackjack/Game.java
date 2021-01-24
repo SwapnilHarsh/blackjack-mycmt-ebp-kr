@@ -200,28 +200,5 @@ public class Game {
     System.out.println(" (" + playerHand.value() + ")");
   }
 
-  public void playerDeposits(int amount) {
-    player.balance += amount;
-  }
 
-  public void playerBets(int betAmount) {
-    player.bet = betAmount;
-    player.balance -= betAmount;
-  }
-
-  public int playerBalance() {
-    return player.balance;
-  }
-
-  public void playerWins() {
-    player.balance += player.bet * 2;
-  }
-
-  public void playerLoses() {
-    player.balance += player.bet * 0;
-  }
-
-  public void playerTies() {
-    player.balance += player.bet * 1;
-  }
 }
