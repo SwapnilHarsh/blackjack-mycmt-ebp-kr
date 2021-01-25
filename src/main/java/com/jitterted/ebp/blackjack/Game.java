@@ -55,6 +55,10 @@ public class Game {
 
   public Game() {
     deck = new Deck();
+    player = new Player();
+  }
+  public Player getPlayer(){
+    return this.player;
   }
 
   public void initialDeal() {

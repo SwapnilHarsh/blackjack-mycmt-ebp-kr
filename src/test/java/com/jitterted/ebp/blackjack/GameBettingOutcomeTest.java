@@ -11,65 +11,67 @@ public class GameBettingOutcomeTest {
 
   @Test
   public void playerWith20Bets10WhenWinsBalanceIs30() throws Exception {
-    Player player = createPlayerWithBalance(20);
-    player.playerBets(10);
+    Game game = createGameWithPlayerBalanceOf(20);
+    game.getPlayer().playerBets(10);
 
-    player.playerWins();
+    game.getPlayer().playerWins();
 
-    assertThat(player.playerBalance())
+    assertThat(game.getPlayer().playerBalance())
         .isEqualTo(30);
   }
 
   @Test
   public void playerWith80Bets70WhenTiesBalanceIs80() throws Exception {
-    Player player = createPlayerWithBalance(80);
-    player.playerBets(70);
+    Game game = createGameWithPlayerBalanceOf(80);
+    game.getPlayer().playerBets(70);
 
-    player.playerTies();
+    game.getPlayer().playerTies();
 
-    assertThat(player.playerBalance())
+    assertThat(game.getPlayer().playerBalance())
         .isEqualTo(80);
   }
 
   @Test
   public void playerWith35Bets30WhenLosesBalanceIs5() throws Exception {
-    Player player = createPlayerWithBalance(35);
+    Game game = createGameWithPlayerBalanceOf(35);
 
-    player.playerBets(30);
-    player.playerLoses();
+    game.getPlayer().playerBets(30);
+    game.getPlayer().playerLoses();
 
-    assertThat(player.playerBalance())
+    assertThat(game.getPlayer().playerBalance())
         .isEqualTo(5);
   }
 
   @Test
   public void playerWith40Bets15BalanceIs25() throws Exception {
-    Player player = createPlayerWithBalance(40);
+    Game game = createGameWithPlayerBalanceOf(40);
 
-    player.playerBets(15);
+    game.getPlayer().playerBets(15);
 
-    assertThat(player.playerBalance())
+    assertThat(game.getPlayer().playerBalance())
         .isEqualTo(25);
   }
 
   @Test
   public void playerDeposits18DollarsBalanceIs18Dollars() throws Exception {
-    Player player = createPlayerWithBalance(18);
+    Game game = createGameWithPlayerBalanceOf(18);
 
-    assertThat(player.playerBalance())
+    //Player player = createPlayerWithBalance(18);
+
+    assertThat(game.getPlayer().playerBalance())
         .isEqualTo(18);
   }
+  
 
-
-//  private Game createGameWithPlayerBalanceOf(int amount) {
-//    Game game = new Game();
-//    game.player.playerDeposits(amount);
-//    return game;
-//  }
-
-  private Player createPlayerWithBalance(int amount){
-    Player player = new Player();
-    player.playerDeposits(amount);
-    return player;
+  private Game createGameWithPlayerBalanceOf(int amount) {
+    Game game = new Game();
+    game.getPlayer().playerDeposits(amount);
+    return game;
   }
+
+//  private Player createPlayerWithBalance(int amount){
+//    Player player = new Player();
+//    player.playerDeposits(amount);
+//    return player;
+//  }
 }
