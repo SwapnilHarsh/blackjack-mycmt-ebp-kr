@@ -56,15 +56,13 @@ public class GameBettingOutcomeTest {
   public void playerDeposits18DollarsBalanceIs18Dollars() throws Exception {
     Game game = createGameWithPlayerBalanceOf(18);
 
-    //Player player = createPlayerWithBalance(18);
-
     assertThat(game.getPlayer().playerBalance())
         .isEqualTo(18);
   }
 
   @Test
   public void totalAmountBetsWhenPlayerBets0() throws Exception{
-    Game game = createGameWithPlayerBalanceOf(0);
+    Game game = createGameWithPlayerBalanceOf(10);
     game.getPlayer().playerBets(0);
     assertThat(game.getPlayer().totalAmountBets())
             .isEqualTo(0);
@@ -72,7 +70,7 @@ public class GameBettingOutcomeTest {
 
   @Test
   public void totalAmountBetsWhenPlayerBets10() throws Exception{
-    Game game = createGameWithPlayerBalanceOf(0);
+    Game game = createGameWithPlayerBalanceOf(20);
     game.getPlayer().playerBets(10);
     assertThat(game.getPlayer().totalAmountBets())
             .isEqualTo(10);
@@ -80,11 +78,35 @@ public class GameBettingOutcomeTest {
 
   @Test
   public void totalAmountBetsWhenPlayerBets10amd15() throws Exception{
-    Game game = createGameWithPlayerBalanceOf(0);
+    Game game = createGameWithPlayerBalanceOf(50);
     game.getPlayer().playerBets(10);
     game.getPlayer().playerBets(15);
     assertThat(game.getPlayer().totalAmountBets())
             .isEqualTo(25);
+  }
+
+  @Test
+  public void totalAmountBetsGetsBonus10WhenPlayerBets100() throws Exception{
+    Game game = createGameWithPlayerBalanceOf(200);
+    game.getPlayer().playerBets(100);
+    assertThat(game.getPlayer().totalAmountBets())
+            .isEqualTo(110);
+  }
+  @Test
+  public void totalAmountBetsGetsNoBonus10WhenPlayerBets99() throws Exception{
+    Game game = createGameWithPlayerBalanceOf(200);
+    game.getPlayer().playerBets(99);
+    assertThat(game.getPlayer().totalAmountBets())
+            .isEqualTo(99);
+  }
+
+  @Test
+  public void totalAmountBetsGetsBonus10WhenPlayerBets100And200() throws Exception{
+    Game game = createGameWithPlayerBalanceOf(500);
+    game.getPlayer().playerBets(100);
+    game.getPlayer().playerBets(200);
+    assertThat(game.getPlayer().totalAmountBets())
+            .isEqualTo(320);
   }
 
   private Game createGameWithPlayerBalanceOf(int amount) {

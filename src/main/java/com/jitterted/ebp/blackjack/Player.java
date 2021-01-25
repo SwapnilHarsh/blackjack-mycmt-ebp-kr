@@ -16,8 +16,11 @@ public class Player {
     public void playerBets(int betAmount) {
         this.bet = betAmount;
         this.balance -= betAmount;
+        if(betAmount >=100){
+            // If the bet amount is 100 or more add the bonus 10 to the bet amount
+            betAmount +=10;
+        }
         this.totalBet += betAmount;
-
     }
 
     public int playerBalance() {
