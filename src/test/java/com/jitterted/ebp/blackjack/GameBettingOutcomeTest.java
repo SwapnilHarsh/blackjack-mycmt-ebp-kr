@@ -61,13 +61,39 @@ public class GameBettingOutcomeTest {
     assertThat(game.getPlayer().playerBalance())
         .isEqualTo(18);
   }
-  
+
+  @Test
+  public void totalAmountBetsWhenPlayerBets0() throws Exception{
+    Game game = createGameWithPlayerBalanceOf(0);
+    game.getPlayer().playerBets(0);
+    assertThat(game.getPlayer().totalAmountBets())
+            .isEqualTo(0);
+  }
+
+  @Test
+  public void totalAmountBetsWhenPlayerBets10() throws Exception{
+    Game game = createGameWithPlayerBalanceOf(0);
+    game.getPlayer().playerBets(10);
+    assertThat(game.getPlayer().totalAmountBets())
+            .isEqualTo(10);
+  }
+
+  @Test
+  public void totalAmountBetsWhenPlayerBets10amd15() throws Exception{
+    Game game = createGameWithPlayerBalanceOf(0);
+    game.getPlayer().playerBets(10);
+    game.getPlayer().playerBets(15);
+    assertThat(game.getPlayer().totalAmountBets())
+            .isEqualTo(25);
+  }
 
   private Game createGameWithPlayerBalanceOf(int amount) {
     Game game = new Game();
     game.getPlayer().playerDeposits(amount);
     return game;
   }
+
+
 
 //  private Player createPlayerWithBalance(int amount){
 //    Player player = new Player();

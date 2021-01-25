@@ -3,9 +3,11 @@ package com.jitterted.ebp.blackjack;
 public class Player {
     int balance;
     int bet;
+    int totalBet;
     public Player(){
         this.balance = 0;
         this.bet = 0;
+        this.totalBet = 0;
     }
     public void playerDeposits(int amount) {
         this.balance += amount;
@@ -14,6 +16,8 @@ public class Player {
     public void playerBets(int betAmount) {
         this.bet = betAmount;
         this.balance -= betAmount;
+        this.totalBet += betAmount;
+
     }
 
     public int playerBalance() {
@@ -31,4 +35,10 @@ public class Player {
     public void playerTies() {
         this.balance += this.bet * 1;
     }
+
+    public int totalAmountBets() {
+        return this.totalBet;
+    }
+
+
 }
